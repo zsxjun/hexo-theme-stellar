@@ -154,6 +154,64 @@ function layoutDiv() {
     `
   }
 
+if (theme.article.donate) {
+  const donateImage = () => {
+    if (theme.article.donate.wechat) {
+      return `
+      <div class="donate-image" id="donate-wechat" style="display:none; position:absolute; z-index:1000; transform: translateY(-100%); left: 50%; transform: translateX(-50%) translateY(-100%);">
+        <img src="${theme.article.donate.wechat}" alt="Donate with WeChat" style="width: 150px; height: auto;" />
+      </div>
+      `;
+    } else {
+      return '';
+    }
+  };
+  el += `
+  <section id="donate">
+    <div class="header"><span>${__('meta.donate')}</span></div>
+    <div class="body">
+      <p>${__('点击爱心给作者加鸡腿~ ')}
+        <span class="donate-icon" onclick="showQRCode()" style="display: inline-block;">
+          <svg class="donate-svg" viewBox="0 0 24 24" style="width:20px;height:20px;fill:#fe8f8f;vertical-align:middle;">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+        </span>
+      </p>
+      ${donateImage()}
+    </div>
+  </section>
+  `;
+  el += `
+  <style>
+    .donate-svg {
+      animation: donateFlip 1s ease infinite;
+    }
+    @keyframes donateFlip {
+      0% { transform: scaleX(1); }
+      50% { transform: scaleX(-1); }
+      100% { transform: scaleX(1); }
+    }
+  </style>
+  <script>
+    const showQRCode = () => {
+      const qrCode = document.getElementById('donate-wechat');
+      qrCode.style.display = 'block';
+      document.addEventListener('click', hideQRCode);
+    };
+
+    const hideQRCode = (event) => {
+      const qrCode = document.getElementById('donate-wechat');
+      const donateIcon = document.querySelector('.donate-icon');
+      if (!qrCode.contains(event.target) && !donateIcon.contains(event.target)) {
+        qrCode.style.display = 'none';
+        document.removeEventListener('click', hideQRCode);
+      }
+    };
+  </script>
+  `;
+}
+el += '</div>';
+return el;
   el += '</div>';
   return el;
 }

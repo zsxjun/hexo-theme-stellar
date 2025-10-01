@@ -35,7 +35,7 @@ function layoutNodeContent(ctx, content) {
 }
 
 module.exports = ctx => function(args, content = '') {
-  args = ctx.args.map(args, ['api', 'user', 'type', 'limit', 'hide', 'avatar'])
+  args = ctx.args.map(args, ['api', 'user', 'type', 'limit', 'hide', 'config'])
   args['data-api'] = args.api
   var el = ''
   if (!args.type) {

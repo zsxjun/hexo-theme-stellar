@@ -72,6 +72,8 @@ function div_default() {
   el += icon('default:calendar')
   // time
   el += `<time datetime="${date_xml(post.date)}">${date(post.date, config.date_format)}</time>`
+  <!-- 新增字数统计 新增一行-->
+  el += '<span class="post-count">&nbsp;'+ wordcount(post.content) +' 字 </span>';
   el += '</span>';
   // cat
   if (post.categories && post.categories.length > 0) {
